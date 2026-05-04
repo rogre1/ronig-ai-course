@@ -599,11 +599,16 @@
 
             #hero { padding: 7rem 1.25rem 3rem; }
 
-            .hero-bg { width: 100%; opacity: 0.25; }
+            .hero-bg {
+                width: 100%;
+                opacity: 1;
+                background-image: url('assets/hero1.png');
+                background-position: center top;
+            }
 
             .hero-overlay {
                 width: 100%;
-                background: linear-gradient(to top, var(--dark) 65%, transparent);
+                background: linear-gradient(to top, var(--dark) 55%, rgba(26,26,26,0.5) 100%);
             }
 
             .hero-content { margin: 0; }
@@ -625,6 +630,11 @@
             .price-num { font-size: 3.5rem; }
 
             #video, #learn, #faq { padding: 3.5rem 1.25rem; }
+
+            .video-wrapper {
+                padding-bottom: 177.78%; /* 9:16 portrait */
+                border-radius: 16px;
+            }
 
             #behind, #about, #pricing { padding: 3.5rem 1.25rem; }
         }
