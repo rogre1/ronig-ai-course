@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קורס קריינות וליפסינק ב-AI | Ronig.ai</title>
+    <meta name="description" content="קריינות וליפסינק ב-AI שנשמעים טבעיים בעברית — ElevenLabs ו-Kling">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #6B7F52;
+            --green-light: #8a9e6e;
+            --dark: #222222;
+            --darker: #1a1a1a;
+            --white: #ffffff;
+            --muted: #999999;
+            --border: rgba(107, 127, 82, 0.3);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            direction: rtl;
+            text-align: right;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 100;
+            padding: 1rem clamp(1.5rem, calc((100% - 1100px) / 2), 200px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img { height: 38px; width: auto; }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            display: none;
+        }
+
+        .logo-text span { color: var(--green); }
+
+        .nav-cta {
+            background: var(--green);
+            color: var(--white);
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-1px);
+        }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.78);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--green-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        h1 .highlight { color: var(--green); }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            line-height: 1.85;
+            color: #cccccc;
+            margin-bottom: 1.25rem;
+            font-weight: 400;
+        }
+
+        .hero-audience {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--green);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107, 127, 82, 0.4);
+        }
+
+        .hero-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107, 127, 82, 0.5);
+        }
+
+        /* ── SECTIONS SHARED ── */
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green);
+            margin-bottom: 0.6rem;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-header { text-align: center; margin-bottom: 3rem; }
+
+        /* ── PROBLEM ── */
+        #problem {
+            padding: 5rem 2rem;
+            background: var(--darker);
+        }
+
+        .problem-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .problem-intro {
+            font-size: 1.05rem;
+            color: #ccc;
+            line-height: 1.8;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .problem-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .problem-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            text-align: right;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .problem-item::before {
+            content: '✗';
+            color: #e06060;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .problem-solution {
+            font-size: 1rem;
+            color: var(--green-light);
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        /* ── COURSE CONTENT ── */
+        #content {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+
+        .content-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .content-card:hover {
+            border-color: var(--border);
+            transform: translateY(-4px);
+        }
+
+        .content-card.bonus {
+            background: rgba(107, 127, 82, 0.07);
+            border-color: var(--border);
+        }
+
+        .content-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+
+        .content-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .content-card ul { list-style: none; }
+
+        .content-card ul li {
+            font-size: 0.88rem;
+            color: var(--muted);
+            padding: 0.35rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .content-card ul li::before {
+            content: '·';
+            color: var(--green);
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .bonus-label {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.2rem 0.7rem;
+            border-radius: 100px;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── HOW IT'S BUILT ── */
+        #how {
+            padding: 5rem 2rem;
+            background: var(--darker);
+            text-align: center;
+        }
+
+        .how-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .how-inner p {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.9;
+            margin-top: 1.25rem;
+        }
+
+        /* ── WHO IT'S FOR ── */
+        #for {
+            padding: 5rem 2rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .for-list { list-style: none; margin-top: 2rem; }
+
+        .for-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .for-list li:last-child { border-bottom: none; }
+
+        .for-check {
+            width: 28px;
+            height: 28px;
+            background: rgba(107, 127, 82, 0.15);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--green);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* ── PRICING ── */
+        #pricing {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .price-card {
+            max-width: 460px;
+            margin: 2.5rem auto 0;
+            background: rgba(107, 127, 82, 0.07);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-num {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-num span {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--green);
+            vertical-align: super;
+        }
+
+        .price-desc {
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: right;
+            margin-bottom: 2.5rem;
+        }
+
+        .price-features li {
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .price-cta {
+            display: block;
+            background: var(--green);
+            color: var(--white);
+            padding: 1.1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107, 127, 82, 0.4);
+        }
+
+        .price-cta:hover {
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107, 127, 82, 0.5);
+        }
+
+        /* ── BUNDLE ── */
+        #bundle {
+            padding: 1rem 2rem 5rem;
+        }
+
+        .bundle-card {
+            max-width: 560px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .bundle-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .bundle-card p {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.75;
+        }
+
+        .bundle-course-name {
+            font-size: 0.95rem;
+            color: var(--green-light);
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .bundle-cta {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--green);
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .bundle-cta:hover {
+            background: var(--green);
+            transform: translateY(-2px);
+        }
+
+        /* ── TRANSPARENCY ── */
+        #transparency {
+            padding: 1rem 2rem 3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .transparency-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .transparency-box p {
+            font-size: 0.88rem;
+            color: #999;
+            line-height: 1.75;
+        }
+
+        .transparency-box strong { color: #ccc; }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--darker);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-logo img { height: 32px; }
+
+        footer p { color: var(--muted); font-size: 0.82rem; }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            header { padding: 0.85rem 1rem; }
+
+            #hero { padding: 7rem 1.25rem 4rem; }
+
+            .problem-list { grid-template-columns: 1fr; }
+
+            .content-grid { grid-template-columns: 1fr; }
+
+            .price-card { padding: 2rem 1.5rem; }
+
+            .price-num { font-size: 3.5rem; }
+
+            #content, #for { padding: 3.5rem 1.25rem; }
+
+            #problem, #how, #pricing { padding: 3.5rem 1.25rem; }
+
+            .bundle-card { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+    <a href="#" class="logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span class="logo-text">Ronig<span>.ai</span></span>
+    </a>
+    <a href="YOUR_GROUO_LINK_VOICE" target="_blank" class="nav-cta">לקבלת גישה לקורס</a>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content fade-in">
+        <div class="hero-badge">מיני קורס | Ronig.ai</div>
+        <h1>
+            הדמויות שלכם<br>
+            עדיין נשמעות<br>
+            <span class="highlight">כמו רובוטים?</span>
+        </h1>
+        <p class="hero-sub">
+            בקורס הזה אני מראה בדיוק איך אני יוצרת<br>
+            קריינות וליפסינק ב-AI שנשמעים טבעיים יותר בעברית<br>
+            כולל העבודה שלי עם <strong>ElevenLabs</strong> ו-<strong>Kling</strong>
+        </p>
+        <p class="hero-audience">מיועד ליוצרים שכבר התנסו בכלי AI ורוצים לקחת את הסרטונים לרמה הבאה</p>
+        <a href="YOUR_GROUO_LINK_VOICE" target="_blank" class="hero-cta">לקבלת גישה לקורס ←</a>
+    </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section id="problem">
+    <div class="problem-inner fade-in">
+        <p class="section-label">הבעיה</p>
+        <h2>הבעיה לא מתחילה בוויזואל<br>אלא בסאונד</h2>
+        <p class="problem-intro">
+            אפשר ליצור היום ויזואלים מטורפים ב-AI.<br>
+            אבל ברגע שהדמות מתחילה לדבר...
+        </p>
+        <div class="problem-list">
+            <div class="problem-item">העברית נשמעת מוזר</div>
+            <div class="problem-item">יש טעויות בהגייה</div>
+            <div class="problem-item">הליפסינק לא יושב טוב</div>
+            <div class="problem-item">הכול מרגיש "AI" בצורה לא טובה</div>
+        </div>
+        <p class="problem-solution">
+            בקורס הזה אני מראה בדיוק איך אני עובדת<br>
+            כדי לגרום לדמויות להישמע ולהרגיש הרבה יותר אמינות.
+        </p>
+    </div>
+</section>
+
+<!-- ── COURSE CONTENT ── -->
+<section id="content">
+    <div class="section-header fade-in">
+        <p class="section-label">תוכן הקורס</p>
+        <h2>מה יש בתוך הקורס?</h2>
+    </div>
+    <div class="content-grid">
+        <div class="content-card fade-in">
+            <div class="content-icon">🎙️</div>
+            <h3>יצירת קריינות ב-ElevenLabs</h3>
+            <ul>
+                <li>עבודה עם Text To Speech</li>
+                <li>איך לגרום לעברית להישמע טוב יותר</li>
+                <li>איך להימנע מטעויות והגיות מוזרות</li>
+                <li>איך לדייק את הטקסט לפני ההמרה לקול</li>
+            </ul>
+        </div>
+        <div class="content-card fade-in">
+            <div class="content-icon">🎤</div>
+            <h3>שינוי הקול שלכם ב-AI</h3>
+            <ul>
+                <li>איך להקליט את עצמכם</li>
+                <li>איך להעלות את ההקלטה ל-ElevenLabs</li>
+                <li>איך לשנות את הקול ולהתאים אותו למה שדמיינתם</li>
+            </ul>
+        </div>
+        <div class="content-card fade-in">
+            <div class="content-icon">👄</div>
+            <h3>ליפסינק ב-Kling</h3>
+            <ul>
+                <li>2 שיטות שונות ליצירת ליפסינק</li>
+                <li>יצירת Avatar מדבר</li>
+                <li>הלבשת ליפסינק על וידאו קיים</li>
+            </ul>
+        </div>
+        <div class="content-card bonus fade-in">
+            <span class="bonus-label">בונוס</span>
+            <div class="content-icon">🔊</div>
+            <h3>יצירת סאונד אפקטים ב-AI</h3>
+            <ul>
+                <li>איך יוצרים אפקטים וסאונדים בתוך ElevenLabs</li>
+                <li>איך מוסיפים עוד שכבת חיים לסרטונים</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ── HOW IT'S BUILT ── -->
+<section id="how">
+    <div class="how-inner fade-in">
+        <p class="section-label">גישת ההוראה</p>
+        <h2>איך הקורס בנוי?</h2>
+        <p>
+            בלי חפירות ותיאוריה מיותרת.<br><br>
+            אני פשוט פותחת את הכלים ומראה בדיוק איך אני עובדת בזמן אמת —
+            צעד אחרי צעד, על דוגמאות אמיתיות מתוך העבודה שלי.
+        </p>
+    </div>
+</section>
+
+<!-- ── WHO IT'S FOR ── -->
+<section id="for">
+    <div class="section-header fade-in">
+        <p class="section-label">למי זה מתאים</p>
+        <h2>למי הקורס מתאים?</h2>
+    </div>
+    <ul class="for-list">
+        <li class="fade-in">
+            <span class="for-check">✓</span>
+            <span>ליוצרים שכבר עובדים עם AI ורוצים לשדרג את הסאונד</span>
+        </li>
+        <li class="fade-in">
+            <span class="for-check">✓</span>
+            <span>למי שיוצר סרטונים ורוצה לקחת אותם רמה קדימה</span>
+        </li>
+        <li class="fade-in">
+            <span class="for-check">✓</span>
+            <span>למי שהקריינות שלו עדיין נשמעת "AI מדי"</span>
+        </li>
+        <li class="fade-in">
+            <span class="for-check">✓</span>
+            <span>למי שרוצה ליצור דמויות שמדברות בצורה אמינה יותר</span>
+        </li>
+    </ul>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+    <div class="fade-in section-header">
+        <p class="section-label">הצטרפות לקורס</p>
+        <h2>השקעה חד פעמית, ידע לכל החיים</h2>
+    </div>
+    <div class="price-card fade-in">
+        <span class="price-badge">גישה מלאה לקורס</span>
+        <div class="price-num"><span>₪</span>119</div>
+        <p class="price-desc">תשלום חד פעמי · גישה מיידית לכל התוכן</p>
+        <ul class="price-features">
+            <li>גישה מיידית לקורס לאחר הרכישה</li>
+            <li>צפייה מלאה בעברית</li>
+            <li>צפייה בזמן ובקצב שלכם</li>
+            <li>גישה מכל מחשב או טלפון</li>
+        </ul>
+        <a href="YOUR_GROUO_LINK_VOICE" target="_blank" class="price-cta">לקבלת גישה לקורס ←</a>
+    </div>
+</section>
+
+<!-- ── BUNDLE UPSELL ── -->
+<section id="bundle">
+    <div class="bundle-card fade-in">
+        <h3>רוצה גם ללמוד איך ליצור את הסרטון עצמו?</h3>
+        <p>אפשר לקבל גם את הקורס:</p>
+        <p class="bundle-course-name">"מאחורי הקלעים של סרטון הסופגניה"</p>
+        <p>ולראות בדיוק איך יצרתי את סרטון האנימציה שהגיע למיליון צפיות — משלב הרעיון ועד הסרטון הסופי.</p>
+        <a href="YOUR_BUNDLE_LINK" target="_blank" class="bundle-cta">לצפייה בבאנדל ←</a>
+    </div>
+</section>
+
+<!-- ── TRANSPARENCY ── -->
+<section id="transparency">
+    <div class="transparency-box fade-in">
+        <span style="font-size:1.1rem; flex-shrink:0;">ℹ️</span>
+        <p>
+            <strong>חשוב לדעת:</strong> הקורס כולל עבודה עם כלים חיצוניים כמו ElevenLabs ו-Kling, שעשויים לדרוש מנוי בתשלום.
+        </p>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="footer-logo">
+        <img src="assets/logo.png" alt="Ronig.ai" onerror="this.style.display='none'">
+    </div>
+    <p>© 2026 Ronig.ai · כל הזכויות שמורות</p>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

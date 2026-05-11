@@ -4,5 +4,6 @@
 # Keep only website files
 !.gitignore
 !index.html
+!voice.html
 !assets/
 !assets/**
