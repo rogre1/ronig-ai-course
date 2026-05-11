@@ -482,49 +482,122 @@
         .bundle-card {
             max-width: 560px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 14px;
-            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(107,127,82,0.12) 0%, rgba(107,127,82,0.04) 100%);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 2.75rem 2.5rem;
             text-align: center;
+            box-shadow: 0 0 40px rgba(107,127,82,0.15);
+        }
+
+        .bundle-special-badge {
+            display: inline-block;
+            background: var(--green);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.25rem;
         }
 
         .bundle-card h3 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+            font-weight: 900;
+            margin-bottom: 1.75rem;
+            line-height: 1.3;
         }
 
-        .bundle-card p {
-            font-size: 0.95rem;
-            color: #aaa;
-            line-height: 1.75;
+        .bundle-courses {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: right;
         }
 
-        .bundle-course-name {
+        .bundle-courses li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            margin-bottom: 0.6rem;
             font-size: 0.95rem;
-            color: var(--green-light);
             font-weight: 600;
-            margin: 1rem 0;
+        }
+
+        .bundle-courses li:last-child { margin-bottom: 0; }
+
+        .bundle-check {
+            color: var(--green);
+            font-weight: 900;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .bundle-pricing {
+            margin-bottom: 2rem;
+            padding: 1.25rem;
+            background: rgba(26,26,26,0.5);
+            border-radius: 10px;
+        }
+
+        .bundle-original {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .bundle-original s { color: #888; }
+
+        .bundle-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .bundle-arrow { color: var(--green); font-size: 1.2rem; }
+
+        .bundle-price-new {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .bundle-price-new span {
+            font-size: 1.4rem;
+            color: var(--green);
+            vertical-align: super;
+        }
+
+        .bundle-only {
+            font-size: 0.85rem;
+            color: var(--green-light);
+            margin-top: 0.3rem;
         }
 
         .bundle-cta {
-            display: inline-block;
-            margin-top: 1.5rem;
-            background: transparent;
+            display: block;
+            background: var(--green);
             color: var(--white);
-            border: 2px solid var(--green);
-            padding: 0.85rem 2rem;
+            padding: 1.1rem 2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(107,127,82,0.4);
         }
 
         .bundle-cta:hover {
-            background: var(--green);
+            background: var(--green-light);
             transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(107,127,82,0.5);
         }
 
         /* ── TRANSPARENCY ── */
@@ -769,11 +842,23 @@
 <!-- ── BUNDLE UPSELL ── -->
 <section id="bundle">
     <div class="bundle-card fade-in">
-        <h3>רוצה גם ללמוד איך ליצור את הסרטון עצמו?</h3>
-        <p>אפשר לקבל גם את הקורס:</p>
-        <p class="bundle-course-name">"מאחורי הקלעים של סרטון הסופגניה"</p>
-        <p>ולראות בדיוק איך יצרתי את סרטון האנימציה שהגיע למיליון צפיות — משלב הרעיון ועד הסרטון הסופי.</p>
-        <a href="YOUR_BUNDLE_LINK" target="_blank" class="bundle-cta">לצפייה בבאנדל ←</a>
+        <span class="bundle-special-badge">הצעה מיוחדת</span>
+        <h3>החבילה המלאה ליצירת סרטוני AI</h3>
+        <ul class="bundle-courses">
+            <li><span class="bundle-check">✔</span> קורס יצירת סרטוני אנימציה AI</li>
+            <li><span class="bundle-check">✔</span> קורס קריינות וליפסינק</li>
+        </ul>
+        <div class="bundle-pricing">
+            <p class="bundle-original">במקום לשלם בנפרד: <s>₪406</s></p>
+            <div class="bundle-price-row">
+                <span class="bundle-arrow">👉</span>
+                <div>
+                    <div class="bundle-price-new"><span>₪</span>347</div>
+                    <div class="bundle-only">בלבד</div>
+                </div>
+            </div>
+        </div>
+        <a href="https://pay.grow.link/ODg3NjU~da27f642cd765f111efd89150d4e236a-MzM5NTU0OQ" target="_blank" class="bundle-cta">לרכישת החבילה המלאה ←</a>
     </div>
 </section>
 
